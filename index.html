@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Days Since 9/9/24</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: #ffffff;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      padding: 50px 40px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      max-width: 460px;
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #00ff9d;
+    }
+
+    .subtitle {
+      color: #aaaaaa;
+      margin-bottom: 40px;
+      font-size: 18px;
+    }
+
+    .days {
+      font-size: 92px;
+      font-weight: bold;
+      color: #00ff9d;
+      margin: 20px 0;
+      line-height: 1;
+      text-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
+    }
+
+    .label {
+      font-size: 18px;
+      color: #bbbbbb;
+      letter-spacing: 3px;
+      margin-bottom: 30px;
+    }
+
+    .date {
+      color: #888888;
+      font-size: 16px;
+      margin-top: 30px;
+    }
+
+    button {
+      background: #00ff9d;
+      color: #000;
+      border: none;
+      padding: 12px 28px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: #00cc7a;
+      transform: translateY(-2px);
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Days Since 9/9/24</h1>
+    <p class="subtitle">September 9, 2024</p>
+    
+    <div class="days" id="days">0</div>
+    <div class="label">DAYS</div>
+
+    <div class="date" id="today"></div>
+
+    <button onclick="updateDays()">Refresh</button>
+
+    <div class="footer">
+      Updated automatically • <span id="last-updated"></span>
+    </div>
+  </div>
+
+  <script>
+    function calculateDaysSince() {
+      const targetDate = new Date('2024-09-09');
+      const today = new Date();
+      
+      // Reset time to midnight for accurate day count
+      today.setHours(0, 0, 0, 0);
+      targetDate.setHours(0, 0, 0, 0);
+
+      const diffTime = today - targetDate;
+      const daysPassed = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+      return daysPassed;
+    }
+
+    function updateDays() {
+      const days = calculateDaysSince();
+      document.getElementById('days').textContent = days.toLocaleString();
+
+      // Update today's date
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const todayStr = new Date().toLocaleDateString('en-US', options);
+      document.getElementById('today').textContent = `Today is ${todayStr}`;
+
+      // Update last refreshed time
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('last-updated').textContent = `Last updated at ${timeStr}`;
+    }
+
+    // Initial load
+    updateDays();
+
+    // Auto refresh every 5 minutes
+    setInterval(updateDays, 300000);
+  </script>
+</body>
+</html>
