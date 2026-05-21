@@ -108,14 +108,18 @@
     function calculateDaysSince() {
       const targetDate = new Date('2026-05-21');
       const today = new Date();
-      
-      // Reset time to midnight for accurate day count
+     
+      // Reset both to midnight in local time
       today.setHours(0, 0, 0, 0);
       targetDate.setHours(0, 0, 0, 0);
 
+      // If today is the same day or earlier → show 0
+      if (today <= targetDate) {
+        return 0;
+      }
+
       const diffTime = today - targetDate;
       const daysPassed = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
       return daysPassed;
     }
 
@@ -139,6 +143,6 @@
 
     // Auto refresh every 5 minutes
     setInterval(updateDays, 300000);
-  </script>
+</script>
 </body>
 </html>
